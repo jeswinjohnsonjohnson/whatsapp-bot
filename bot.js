@@ -1,12 +1,24 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 
+// Initialize the bot
 const client = new Client({
-    authStrategy: new LocalAuth()
+    authStrategy: new LocalAuth(),
+    puppeteer: {
+        executablePath: '/usr/bin/chromium', // <-- path to Chromium on Debian/Ubuntu
+        headless: true,                       // run without GUI
+        args: [
+            '--no-sandbox', 
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-extensions',
+            '--disable-gpu'
+        ]
+    }
 });
 
-const MY_NAME = 'Jeswin'; // your bot reply
-const TARGET_GROUP = 'Hi'; // exact WhatsApp group name
+const MY_NAME = 'Jeswin';      // bot reply
+const TARGET_GROUP = 'Hi';     // exact WhatsApp group name
 
 let lastReplyTime = 0;
 const COOLDOWN = 1000 * 60 * 10; // 10 minutes
@@ -36,7 +48,6 @@ client.on('message', async msg => {
     if (chat.name !== TARGET_GROUP) return;
 
     const text = msg.body.toLowerCase().trim();
-
     console.log(`Message in ${chat.name}: "${text}"`);
 
     // Detect keyword
