@@ -1,14 +1,15 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 
-// Initialize client
 const client = new Client({
-    authStrategy: new LocalAuth(), // persist session
+    authStrategy: new LocalAuth(),
     puppeteer: {
-        headless: true, // run in cloud
+        headless: true,
+        executablePath: '/usr/bin/chromium-browser', // ← add this
         args: ['--no-sandbox', '--disable-setuid-sandbox']
     }
 });
+
 
 // ---------------- CONFIG ----------------
 const MY_NAME = 'Jeswin';      // Bot reply
