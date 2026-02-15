@@ -1,21 +1,14 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 
-// Initialize the bot
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
-        executablePath: '/usr/bin/chromium', // <-- path to Chromium on Debian/Ubuntu
-        headless: true,                       // run without GUI
-        args: [
-            '--no-sandbox', 
-            '--disable-setuid-sandbox',
-            '--disable-dev-shm-usage',
-            '--disable-extensions',
-            '--disable-gpu'
-        ]
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
     }
 });
+
 
 const MY_NAME = 'Jeswin';      // bot reply
 const TARGET_GROUP = 'Hi';     // exact WhatsApp group name
