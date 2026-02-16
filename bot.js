@@ -2,71 +2,70 @@ const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 
 const client = new Client({
-    authStrategy: new LocalAuth(),
-    puppeteer: {
-        headless: true,
-        executablePath: '/usr/bin/chromium-browser', // ← add this
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-    }
+    authStrategy: new LocalAuth()
 });
 
+const MY_NAME = 'Jeswin'; // 🔹 your name
+const TARGET_GROUP = 'Hi'; // 🔹 exact group name
 
-// ---------------- CONFIG ----------------
-const MY_NAME = 'Jeswin';      // Bot reply
-const TARGET_GROUP = 'Hi';     // Exact WhatsApp group name
-const COOLDOWN = 1000 * 60 * 10; // 10 minutes
 let lastReplyTime = 0;
+//const COOLDOWN = 1000 * 60 * 10; 
+//const COOLDOWN = 1000; // 1 second in ms
+const COOLDOWN = 1000 * 60 * 60 * 24; // 24 hours in ms
 
-// ---------------- QR CODE ----------------
 client.on('qr', qr => {
     qrcode.generate(qr, { small: true });
-    console.log('Scan this QR code in WhatsApp.');
 });
 
-// ---------------- READY ----------------
 client.on('ready', () => {
     console.log('Bot is ready!');
 });
 
-// ---------------- MESSAGE HANDLER ----------------
+// ------------------- MESSAGE HANDLER -------------------
 client.on('message', async msg => {
-    try {
-        // Only group messages
-        if (!msg.from.endsWith('@g.us')) return;
 
-        // Ignore own messages
-        if (msg.fromMe) return;
+    // only group messages
+    if (!msg.from.endsWith('@g.us')) return;
 
-        const chat = await msg.getChat();
+    // ignore your own messages
+    if (msg.fromMe) return;
 
-        // Only target group
-        if (chat.name !== TARGET_GROUP) return;
+    const chat = await msg.getChat();
 
-        const text = msg.body.toLowerCase().trim();
-        console.log(`Message in "${chat.name}": "${text}"`);
+    // only specific group
+    if (chat.name !== TARGET_GROUP) return;
 
-        // Keyword detection
-        const isOTMessage = text.includes('ot') && text.includes('available');
-        if (!isOTMessage) return;
+    const text = msg.body.toLowerCase().trim();
 
-        // Cooldown check
-        const now = Date.now();
-        if (now - lastReplyTime < COOLDOWN) {
-            console.log('Cooldown active. Not replying.');
-            return;
-        }
-        lastReplyTime = now;
+    // ----- DEBUG LOGS -----
+    console.log(`\nMessage received in group "${chat.name}":`);
+    console.log(`From: ${msg.author || msg.from}`);
+    console.log(`Content: "${text}"`);
 
-        // Delay to appear human
-        setTimeout(async () => {
-            console.log(`Replying with: ${MY_NAME}`);
-            await msg.reply(MY_NAME);
-        }, 2000);
+    // keyword detection
+    const isOTMessage =
+        text.includes('ot') &&
+        text.includes('available');
 
-    } catch (err) {
-        console.error('Error processing message:', err);
+    console.log(`Matches OT criteria: ${isOTMessage}`);
+
+    if (!isOTMessage) return;
+
+    // cooldown to avoid multiple replies
+    const now = Date.now();
+    if (now - lastReplyTime < COOLDOWN) {
+        console.log('Cooldown active, not replying.');
+        return;
     }
+
+    lastReplyTime = now;
+
+    // delay to look human
+    setTimeout(async () => {
+        console.log(`Replying with: ${MY_NAME}`);
+        await msg.reply(MY_NAME);
+    }, 2000);
+
 });
 
-// ---------------- INITIALIZE BOT ----------------
 client.initialize();

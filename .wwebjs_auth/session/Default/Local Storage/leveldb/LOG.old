@@ -1,2 +1,6 @@
-2026/02/16-01:10:13.707 392be Creating DB /Users/jeswinjohnson/Documents/whatsapp-bot/.wwebjs_auth/session/Default/Local Storage/leveldb since it was missing.
-2026/02/16-01:10:13.710 392be Reusing MANIFEST /Users/jeswinjohnson/Documents/whatsapp-bot/.wwebjs_auth/session/Default/Local Storage/leveldb/MANIFEST-000001
+2026/02/16-04:12:11.879 60d14 Reusing MANIFEST /Users/jeswinjohnson/Documents/whatsapp-bot/.wwebjs_auth/session/Default/Local Storage/leveldb/MANIFEST-000001
+2026/02/16-04:12:11.881 60d14 Recovering log #3
+2026/02/16-04:12:11.882 60d14 Reusing old log /Users/jeswinjohnson/Documents/whatsapp-bot/.wwebjs_auth/session/Default/Local Storage/leveldb/000003.log 
+2026/02/16-04:14:12.304 60d17 Level-0 table #5: started
+2026/02/16-04:14:12.307 60d17 Level-0 table #5: 21909 bytes OK
+2026/02/16-04:14:12.310 60d17 Delete type=0 #3

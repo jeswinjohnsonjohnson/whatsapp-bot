@@ -1,2 +1,3 @@
-2026/02/16-01:10:13.764 392be Creating DB /Users/jeswinjohnson/Documents/whatsapp-bot/.wwebjs_auth/session/Default/Session Storage since it was missing.
-2026/02/16-01:10:13.766 392be Reusing MANIFEST /Users/jeswinjohnson/Documents/whatsapp-bot/.wwebjs_auth/session/Default/Session Storage/MANIFEST-000001
+2026/02/16-04:12:12.304 60d14 Reusing MANIFEST /Users/jeswinjohnson/Documents/whatsapp-bot/.wwebjs_auth/session/Default/Session Storage/MANIFEST-000001
+2026/02/16-04:12:12.305 60d14 Recovering log #3
+2026/02/16-04:12:12.306 60d14 Reusing old log /Users/jeswinjohnson/Documents/whatsapp-bot/.wwebjs_auth/session/Default/Session Storage/000003.log 
