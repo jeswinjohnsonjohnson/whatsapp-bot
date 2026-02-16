@@ -6,7 +6,7 @@ const client = new Client({
 });
 
 const MY_NAME = 'Jeswin'; // 🔹 your name
-const TARGET_GROUP = 'Hi'; // 🔹 exact group name
+const TARGET_GROUPS = ['Hi', 'Second Group']; // 🔹 list of exact group names
 
 let lastReplyTime = 0;
 //const COOLDOWN = 1000 * 60 * 10; 
@@ -32,8 +32,8 @@ client.on('message', async msg => {
 
     const chat = await msg.getChat();
 
-    // only specific group
-    if (chat.name !== TARGET_GROUP) return;
+    // only specific groups
+    if (!TARGET_GROUPS.includes(chat.name)) return;
 
     const text = msg.body.toLowerCase().trim();
 
